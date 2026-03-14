@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+ 
+</head>
+<body>
+<h1>Привет {{user}}! </h1>
+<a href="/logout">
+    <button>Выйти</button>    
+</a>
+<form action="/upload_photo" method="post" enctype="multipart/form-data">
+    <input type="file" name="file">
+    <button type="submit">Загрузить фото</button>
+</form>
+
+<h3>Твои фотографии:</h3>
+<div class="gallery" style="display: flex; flex-wrap: wrap; gap: 20px;">
+    {% if photos %}
+        {% for photo in photos %}
+            <div style="text-align: center; border: 1px solid #ccc; padding: 10px; border-radius: 8px;">
+                <img src="/{{ photo }}" alt="Фото пользователя" width="200" style="display: block; margin-bottom: 10px;">
+                
+                <form action="/delete_photo" method="post">
+                    <input type="hidden" name="photo" value="{{ photo }}">
+                    <button type="submit" style="background-color: #ff0d4d; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px;">
+                        Удалить
+                    </button>
+                </form>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>У тебя пока нет загруженных фото.</p>
+    {% endif %}
+</div>
+</form>
+<form action="/message">
+    <button type="submit">Перейти в чат</button>
+</form>
+
+</body>
+</html>
